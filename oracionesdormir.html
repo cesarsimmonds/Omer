@@ -174,7 +174,25 @@ body{font-family:Georgia,serif;background:#0f0a1e;min-height:100vh;color:#f0e8d0
   <div class="foot">Bet El Shadai · תְּפִלַּת הַלַּיְלָה</div>
 </div>
 <script>
+// 1. Total de tarjetas de oración (ajústalo si agregas o quitas)
+var TOTAL = 6;
 
+// 2. Objeto para saber cuáles están completadas
+var done = {};
+
+// 3. Objeto para saber cuáles están abiertas/desplegadas
+var openCards = {};
+
+// 4. Textos que leerá el sintetizador de voz (cada oración completa)
+var TEXTS = {
+  1: "Bendito eres Tú, Adonai, Rey del universo... (texto completo de la Oración del Perdón)",
+  2: "",  // Oración privada sin texto para leer
+  3: "Bendito eres Tú, Adonai, Rey del universo... (texto de HaMapil)",
+  4: "Shemá Israel... (texto del Shemá y la declaración)",
+  5: "En paz me acostaré... (Tehilim 4:8)",
+  6: "El que habita al abrigo del Altísimo... (Tehilim 91 completo)"
+};
+  
 var velocidad=1.2,activeN=null,reproduciendo=false,pausado=false,tiempoAcumulado=0,tiempoInicio=0,duracionTotal=0,timerProgreso=null;
 function calcularDuracion(n,vel){if(!TEXTS[n])return 60;return Math.round((TEXTS[n].split(/\s+/).length/(130*(vel||velocidad)))*60);}
 function formatTime(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
