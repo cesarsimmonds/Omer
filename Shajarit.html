@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#0a0800"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>&#1513;&#1463;&#1495;&#1458;&#1512;&#1460;&#1497;&#1514; — Bet El Shadai</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Georgia,serif;background:#0a0800;min-height:100vh;color:#f0e8d0;overflow-x:hidden}
+.root{max-width:440px;margin:0 auto;padding:0 14px 60px}
+.header{text-align:center;padding:26px 0 14px}
+.the{font-size:24px;color:#e8a830;direction:rtl;text-shadow:0 0 28px #e8a83066;margin-bottom:4px}
+.tsu{font-size:10px;color:#443;letter-spacing:0.2em;text-transform:uppercase}
+.ts2{font-size:11px;color:#554;margin-top:3px;font-style:italic}
+.spbar{background:rgba(255,255,255,0.03);border:1px solid #e8a83026;border-radius:12px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.spbar span{font-size:12px;color:#665;white-space:nowrap}
+.spbar input[type=range]{flex:1;accent-color:#e8a830;cursor:pointer}
+.spbar label{font-size:13px;color:#ffd060;min-width:34px;text-align:right}
+.pw{background:rgba(255,255,255,0.04);border:1px solid #e8a83038;border-radius:16px;padding:14px 16px;margin-bottom:10px}
+.pdots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:8px}
+.pd{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;cursor:pointer;flex-shrink:0}
+.pd.done{background:#c9a830;box-shadow:0 0 5px #c9a83080;border-color:#c9a830}
+.pd.active{background:#ffd060;box-shadow:0 0 10px #ffd060;border-color:#ffd060}
+.pl{text-align:center;font-size:11px;color:#443}
+.pc{background:rgba(255,255,255,0.04);border:1px solid #e8a83033;border-radius:16px;margin-bottom:10px;overflow:hidden}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:10px}
+.phl{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.pico{font-size:18px;flex-shrink:0}
+.pinfo{flex:1;min-width:0}
+.pti{font-size:14px;color:#ffd060;font-weight:normal;line-height:1.3}
+.pme{display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap}
+.psu{font-size:10px;color:#554;letter-spacing:0.04em}
+.tbadge{font-size:10px;color:#e8a830aa;background:#e8a83014;border:1px solid #e8a83033;border-radius:999px;padding:1px 8px;white-space:nowrap;flex-shrink:0}
+.parr{font-size:11px;color:#443;transition:transform 0.3s;flex-shrink:0}
+.parr.open{transform:rotate(180deg)}
+.pbody{display:none;padding:0 16px 16px;border-top:1px solid #e8a8301a}
+.pbody.open{display:block}
+.tx{font-size:14.5px;line-height:1.85;color:#e8e0cc;margin-top:14px}
+.tx em{color:#ffd060;font-style:normal;font-weight:bold}
+.scr{background:#e8a8300a;border-left:2px solid #e8a8304d;border-radius:0 8px 8px 0;padding:12px 14px;margin:10px 0;font-size:14px;line-height:1.85;color:#d8d0b8}
+.scr em{color:#ffd060;font-style:normal;font-weight:bold}
+.cond{background:rgba(100,180,255,0.05);border:1px solid rgba(100,180,255,0.15);border-radius:8px;padding:8px 12px;font-size:12px;color:rgba(150,200,255,0.7);margin:10px 0;font-style:italic}
+.resp{font-size:12px;color:#554;font-style:italic;margin:4px 0 4px 12px;display:block}
+.dl{height:1px;background:linear-gradient(to right,transparent,#e8a83040,transparent);margin:12px 0}
+.he{direction:rtl;text-align:center;font-size:18px;color:#e8a830;line-height:1.9;margin:10px 0 4px;text-shadow:0 0 18px #e8a8304d}
+.tr{text-align:center;font-size:12px;color:#665;font-style:italic;margin-bottom:10px;line-height:1.5}
+.ref{font-size:11px;color:#443;text-align:right;margin-top:8px;font-style:italic}
+.bco{padding:7px 16px;border-radius:13px;font-family:Georgia,serif;font-size:13px;cursor:pointer;border:1px solid #e8a8304d;background:#e8a83014;color:#ffd060}
+.bco.done{border-color:rgba(100,200,100,0.3);background:rgba(100,200,100,0.07);color:#8dcc8d}
+.dscr{text-align:center;padding:50px 20px;display:none}
+.dscr.show{display:block}
+.breset{margin-top:20px;padding:10px 24px;border-radius:999px;font-family:Georgia,serif;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:#443}
+.foot{text-align:center;color:#332;font-size:10px;padding-top:16px;letter-spacing:0.05em}
+/* === Player === */
+.progress-wrap{margin:14px 0 12px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px}
+.progress-bar{width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;position:relative;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#e8a830);transition:width 0.3s;pointer-events:none}
+.controls{display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px}
+.pbtn{padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:14px;cursor:pointer;border:1px solid rgba(232,168,48,0.3);background:rgba(232,168,48,0.08);color:#e8c97a;transition:background 0.2s}
+.pbtn:active{background:rgba(232,168,48,0.2)}
+.pbtn.primary{background:rgba(232,168,48,0.15);border-color:rgba(232,168,48,0.5);font-size:20px;padding:12px 28px}
+.pbtn.secondary{font-size:16px;color:#776;border-color:rgba(255,255,255,0.1)}
+.pstatus{text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic}
+.card-footer{display:flex;justify-content:flex-end}
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <div class="the">&#1513;&#1463;&#1495;&#1458;&#1512;&#1460;&#1497;&#1514;</div>
+    <div class="tsu">Shajarit · Oración de la Mañana</div>
+    <div class="ts2">Bet El Shadai · Oraciones en la Casa</div>
+  </div>
+  <div class="spbar">
+    <span>&#128266; Velocidad</span>
+    <input type="range" min="0.5" max="2.0" step="0.1" value="1.2" oninput="cambiarVel(this.value)"/>
+    <label id="velLabel">1.2×</label>
+  </div>
+  <div class="pw">
+    <div class="pdots" id="progressDots"></div>
+    <div class="pl" id="progLabel">Toca cada sección al completarla</div>
+  </div>
+
+  <div class="pc">
+    <div class="ph" onclick="toggle(1)">
+      <div class="phl"><span class="pico">&#9728;&#65039;</span><div class="pinfo"><div class="pti">Modé Aní — מוֹדֶה אֲנִי</div><div class="pme"><span class="psu">Al despertar</span><span class="tbadge">&#9201; 1 min</span></div></div></div>
+      <span class="parr" id="arrow1">&#9660;</span>
+    </div>
+    <div class="pbody" id="body1">
+      <div class="tx">Doy gracias a Ti, Rey viviente y Padre nuestro, pues Tú misericordiosamente me has permitido despertar a este día. Abundante es Tu fidelidad.<br/><br/>El principio de la sabiduría es el temor de <em>Adonai</em>, buen entendimiento poseen todos quienes lo sienten; Su alabanza perdura por siempre.<br/><br/>Bendito sea el Nombre de Su glorioso reinado por la eternidad.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur1">0:00</span><span id="tot1">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar1" onclick="saltar(1,event)">
+        <div class="progress-fill" id="fill1" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(1)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay1" onclick="togglePlay(1)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(1)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st1">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn1" onclick="complete(1)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(2)">
+      <div class="phl"><span class="pico">&#128167;</span><div class="pinfo"><div class="pti">Netilat Yadaim</div><div class="pme"><span class="psu">Lavado de manos y necesidades</span><span class="tbadge">&#9201; 1 min</span></div></div></div>
+      <span class="parr" id="arrow2">&#9660;</span>
+    </div>
+    <div class="pbody" id="body2">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Di_s nuestro, Rey del universo, que has creado al ser humano con sabiduría y has formado en su cuerpo orificios y cavidades. Revelado y sabido es delante de Tu trono de gloria, que si uno de ellos se obstruyese o se abriese, no sería posible existir ni una sola hora. Bendito eres Tú, <em>Adonai</em>, que curas a todas las criaturas y actúas maravillosamente.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur2">0:00</span><span id="tot2">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar2" onclick="saltar(2,event)">
+        <div class="progress-fill" id="fill2" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(2)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay2" onclick="togglePlay(2)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(2)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st2">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn2" onclick="complete(2)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(3)">
+      <div class="phl"><span class="pico">&#128309;</span><div class="pinfo"><div class="pti">Para el Tzitzit — צִיצִית</div><div class="pme"><span class="psu">Bendición sobre el tzitzit</span><span class="tbadge">&#9201; 1 min</span></div></div></div>
+      <span class="parr" id="arrow3">&#9660;</span>
+    </div>
+    <div class="pbody" id="body3">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Di_s nuestro, Rey del universo, que nos has santificado con Tus mandamientos y nos has ordenado respecto al mandamiento del tzitzit.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur3">0:00</span><span id="tot3">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar3" onclick="saltar(3,event)">
+        <div class="progress-fill" id="fill3" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(3)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay3" onclick="togglePlay(3)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(3)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st3">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn3" onclick="complete(3)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(4)">
+      <div class="phl"><span class="pico">&#128591;</span><div class="pinfo"><div class="pti">Diversas Oraciones Personales</div><div class="pme"><span class="psu">Peticiones de la mañana</span><span class="tbadge">&#9201; 4 min</span></div></div></div>
+      <span class="parr" id="arrow4">&#9660;</span>
+    </div>
+    <div class="pbody" id="body4">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Di_s nuestro, Rey del universo, que quita el sueño de mis ojos y la somnolencia de mis párpados. Sea Tu voluntad, <em>Adonai</em>, mi Di_s y Di_s de mis padres, que me habitúes a Tu Torá y me adhieras a Tus mandamientos. No me dejes caer en el pecado, la iniquidad, la tentación o el menosprecio. Aléjame de la mala inclinación, haz que me apegue a la buena inclinación y subyuga mis inclinaciones naturales para que te sirvan. Otórgame hoy, y todos los días, gracia (hen), bondad (jesed) y misericordia (rajamim) en Tus ojos, y en los ojos de todos los que me vean, y concédeme grandes bondades. Bendito eres Tú, <em>Adonai</em>, que otorga grandes bondades a Su pueblo Ysrael.<br/><br/>Sea Tu voluntad, <em>Adonai</em>, mi Di_s y Di_s de mis padres, que me liberes, hoy y todos los días, de los insolentes y de la insolencia; de un hombre malvado; de la mala inclinación, de un mal compañero, de un mal vecino, de un tropiezo nefasto, de la envidia, de la maledicencia, de un juicio adverso y de un adversario implacable, sea o no un hijo del Pacto.<br/><br/>He aquí que yo acepto sobre mí el precepto positivo de "amarás a tu prójimo como a ti mismo". He aquí que profeso amor y respeto a toda persona con quien haya forjado una amistad sincera, y respeto sin desprecio en mi corazón por el prójimo ya sea conocido o extraño. Y he aquí que dispongo mi boca para orar delante del Padre, Rey de Reyes, el Santo bendito es.<span class="resp">+ Añadir una oración privada</span></div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur4">0:00</span><span id="tot4">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar4" onclick="saltar(4,event)">
+        <div class="progress-fill" id="fill4" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(4)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay4" onclick="togglePlay(4)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(4)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st4">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn4" onclick="complete(4)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(5)">
+      <div class="phl"><span class="pico">&#128220;</span><div class="pinfo"><div class="pti">Bendiciones sobre la Torá</div><div class="pme"><span class="psu">Birjot HaTorá</span><span class="tbadge">&#9201; 4 min</span></div></div></div>
+      <span class="parr" id="arrow5">&#9660;</span>
+    </div>
+    <div class="pbody" id="body5">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Di_s nuestro, Rey del universo, que nos has santificado con Tus mandamientos y nos has ordenado con respecto al estudio de la Torá. Por favor, oh Eterno, Di_s nuestro, haz que las palabras de Tu Torá sean gratas en nuestra boca y en las bocas de todo el pueblo de Ysrael. Que tanto nosotros como nuestros descendientes, y los descendientes de Tu pueblo Ysrael, seamos conocedores de Tu Nombre y estudiosos de Tu Torá por ella misma. Bendito eres Tú, <em>Adonai</em>, que enseña Torá a Tu pueblo Ysrael.<br/><br/>Bendito eres Tú, <em>Adonai</em>, Rey del universo, que nos has escogido entre todas las naciones y nos ha otorgado Tu Torá. Bendito eres Tú, <em>Adonai</em>, Dador de la Torá.</div>
+<div class="dl"></div>
+<div class="scr">Estos son los preceptos que no poseen una medida limitada: el rincón de un campo que debe dejarse para los pobres, la ofrenda de la primicia, el peregrinaje, los actos de bondad y el estudio de la Torá.<br/><br/>Estos son los preceptos de cuyos frutos el hombre disfruta en este mundo y cuyo capital queda intacto para el mundo venidero: dar debido honor al padre y a la madre, realizar actos de bondad, llegar temprano a la sinagoga en la mañana y en la tarde, brindar hospitalidad a los invitados, visitar a los enfermos, atender a las necesidades materiales de una novia, acompañar a los difuntos, concentrarse en las oraciones de la Amidá, el promover la paz entre el hombre y su prójimo; pero el estudio de la Torá es equivalente a todos los anteriores.<br/><br/>Sobre tres cosas se sostiene el mundo: sobre el estudio de la Torá, sobre los actos de bondad y sobre los sufrimientos, muerte y resurrección del Mesías <em>Yeshua</em>.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur5">0:00</span><span id="tot5">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar5" onclick="saltar(5,event)">
+        <div class="progress-fill" id="fill5" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(5)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay5" onclick="togglePlay(5)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(5)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st5">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn5" onclick="complete(5)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(6)">
+      <div class="phl"><span class="pico">&#128293;</span><div class="pinfo"><div class="pti">La Akeidá — עֲקֵידָה</div><div class="pme"><span class="psu">Atadura de Ytzjak y Yeshua</span><span class="tbadge">&#9201; 8 min</span></div></div></div>
+      <span class="parr" id="arrow6">&#9660;</span>
+    </div>
+    <div class="pbody" id="body6">
+      <div class="tx">Di_s nuestro y Di_s de nuestros antepasados: recuérdanos para bien delante de Ti, y visítanos con salvación y misericordia desde los cielos. Y recuerda para nosotros, oh Eterno, el amor de los varones justos de la antigüedad: Abraham, Ytzjak y Yaacob, Tus Siervos. Recuerda el pacto, la bondad y el juramento que le hiciste a nuestro padre Abraham en el monte Moriyá, así como la prueba de Ytzjak por medio de la cual fue atado y elevado en el altar, como está escrito en Tu Torá:</div>
+<div class="scr">Aconteció después de estas cosas que Ha-Elohim probó a Abraham, y le dijo: ¡Abraham! Él respondió: Heme aquí. Y dijo: Toma por favor a tu hijo, tu único, a Ytzjak, a quien amas, y ve a tierra de Moriah, y tú mismo sacrifícalo allí en holocausto sobre uno de los montes que Yo te diré.<br/><br/>Y Abraham se levantó temprano por la mañana, enalbardó su asno y tomó consigo a dos de sus mozos y a su hijo Ytzjak. Luego cortó maderas para el holocausto. Al tercer día Abraham alzó sus ojos, y divisó el lugar desde lejos. Y dijo Abraham a sus mozos: Permaneced aquí con el asno, que yo y el muchacho iremos hasta allí y nos postraremos. Luego regresaremos con vosotros.<br/><br/>Tomó entonces Abraham las maderas del holocausto y las cargó sobre su hijo Ytzjak, luego tomó en su mano el fuego y el cuchillo. E Ytzjak habló a su padre Abraham, diciendo: Padre mío. Y él respondió: Heme aquí, hijo mío. Y le dijo: Mira, está el fuego y los troncos, pero ¿dónde está el cordero para el holocausto? Dijo Abraham: Elohim se proveerá el cordero para el holocausto, hijo mío. Y ambos iban juntos.<br/><br/>Cuando llegaron al lugar que Ha-Elohim le había dicho, Abraham construyó allí el altar, ató a su hijo Ytzjak, y lo puso sobre el altar, encima de los troncos. Y extendió Abraham su mano, y tomó el cuchillo para degollar a su hijo. Pero el Ángel del Eterno lo llamó desde los cielos, y le dijo: ¡Abraham! ¡Abraham! Y él dijo: ¡Heme aquí! No extiendas tu mano contra el muchacho ni le hagas nada, le dijo, pues ya conozco que eres temeroso de Di_s.<br/><br/>Entonces alzó Abraham los ojos, y vio un carnero detrás, trabado por los cuernos en el zarzal. Y Abraham fue y tomó el carnero, y lo sacrificó en holocausto en lugar de su hijo. Y llamó Abraham a aquel lugar Adonai Yireh. Ciertamente te bendeciré, y multiplicaré inmensamente tu descendencia, como las estrellas de los cielos y como la arena que hay en la orilla del mar, y en tu simiente serán benditas todas las naciones de la tierra. Y regresó Abraham a sus mozos.
+<span class="ref">Bereshit 22:1-19</span></div>
+<div class="tx" style="margin-top:12px">También recuerda para nosotros el amor y la entrega de <em>Yeshua</em>, varón justo y nuestro Mesías y Redentor, quien con Su muerte y resurrección confirmó el pacto que juraste a nuestro padre Abraham. Pues la atadura de Ytzjak es una alusión a Su muerte y resurrección, como <em>Yeshua</em> el Mesías se lo reveló cuando les dijo: Abraham vuestro padre se regocijó de que vería mi día; y lo vio y se alegró.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur6">0:00</span><span id="tot6">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar6" onclick="saltar(6,event)">
+        <div class="progress-fill" id="fill6" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(6)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay6" onclick="togglePlay(6)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(6)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st6">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn6" onclick="complete(6)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(7)">
+      <div class="phl"><span class="pico">&#128054;</span><div class="pinfo"><div class="pti">Ribonó Shel Olam</div><div class="pme"><span class="psu">Súplica de misericordia</span><span class="tbadge">&#9201; 2 min</span></div></div></div>
+      <span class="parr" id="arrow7">&#9660;</span>
+    </div>
+    <div class="pbody" id="body7">
+      <div style="background:rgba(255,200,50,0.05);border:1px solid rgba(255,200,50,0.15);border-radius:8px;padding:7px 12px;font-size:11px;color:rgba(255,200,80,0.6);text-align:center;margin-top:14px;font-style:italic">Esta súplica se omite en los días festivos</div>
+<div class="tx">Ribonó shel olam. ¡Señor del universo! Sea Tu voluntad, <em>Adonai</em>, Di_s nuestro y Di_s de nuestros antepasados, que Tú recuerdes por nuestro bienestar el pacto de nuestros antepasados; que tal como nuestro padre Abraham contuvo su misericordia por su único hijo y deseó sacrificarlo para cumplir Tu voluntad, así pueda Tu misericordia suprimir Tu ira hacia nosotros y nos trates con indulgencia, <em>Adonai</em> nuestro Di_s, y con los atributos de bondad y misericordia; que en Tu gran benevolencia hagas retroceder Tu ardiente cólera ante Tu pueblo, Tu ciudad, Tu tierra y Tu heredad.<br/><br/>Cumple, <em>Adonai</em>, Di_s nuestro, la palabra que prometiste por medio de Tu siervo Moshé, como está escrito: Recordaré Mi pacto con Yaacob; también Mi Pacto con Yitzjak y de igual forma Mi pacto con Abraham; y la tierra recordaré.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur7">0:00</span><span id="tot7">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar7" onclick="saltar(7,event)">
+        <div class="progress-fill" id="fill7" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(7)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay7" onclick="togglePlay(7)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(7)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st7">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn7" onclick="complete(7)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(8)">
+      <div class="phl"><span class="pico">&#10024;</span><div class="pinfo"><div class="pti">Ribón Kol HaOlamim</div><div class="pme"><span class="psu">Declaración de humildad</span><span class="tbadge">&#9201; 3 min</span></div></div></div>
+      <span class="parr" id="arrow8">&#9660;</span>
+    </div>
+    <div class="pbody" id="body8">
+      <div class="tx">Una persona siempre debe ser temerosa del Eterno en privado y en público, admitir la verdad, decir la verdad en su corazón, levantarse temprano y proclamar:<br/><br/>Ribón kol haolamim. ¡Señor de todos los mundos! No es gracias a nuestra rectitud que elevamos nuestras súplicas ante Ti, sino gracias a Tu abundante misericordia. ¿Qué somos? ¿Qué es nuestra vida? ¿Qué es nuestra benevolencia? ¿Qué es nuestra rectitud? ¿Qué es nuestra fortaleza? ¿Qué podemos decir ante Ti, <em>Adonai</em>, Di_s nuestro y Di_s de nuestros antepasados? Pues la mayoría de sus obras son nulas y los días de sus vidas están desprovistos de contenido ante Ti. El privilegio de los hombres sobre los animales es inexistente, pues todo es vanidad.<br/><br/>Mas nosotros somos Tu pueblo, miembros de Tu pacto, hijos de Abraham, Tu bienamado; somos descendientes de Ytzjak, su único hijo, quien fue atado sobre el altar; somos la congregación de Yaacob, Tu primogénito, a quien Tú lo nombraste Ysrael y Yeshurún; somos además la comunidad de los redimidos por <em>Yeshua</em> el Mesías, quien ratificó el pacto hecho con Abraham, a fin de que la bendición de Abraham alcanzara primero a Tu pueblo Ysrael y después a los gentiles.<br/><br/>Y por todo esto decimos cada mañana:</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur8">0:00</span><span id="tot8">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar8" onclick="saltar(8,event)">
+        <div class="progress-fill" id="fill8" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(8)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay8" onclick="togglePlay(8)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(8)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st8">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn8" onclick="complete(8)">&#10003; Completada</button></div>
+    </div>
+  </div>  <div class="pc">
+    <div class="ph" onclick="toggle(9)">
+      <div class="phl"><span class="pico">&#10017;&#65039;</span><div class="pinfo"><div class="pti">Declaración del Shemá</div><div class="pme"><span class="psu">Devarim 6:4-9 · Amor al prójimo</span><span class="tbadge">&#9201; 2 min</span></div></div></div>
+      <span class="parr" id="arrow9">&#9660;</span>
+    </div>
+    <div class="pbody" id="body9">
+      <div class="he">&#1513;&#1456;&#1502;&#1463;&#1506; &#1497;&#1460;&#1513;&#1456;&#1512;&#1464;&#1488;&#1461;&#1500; &#1497;&#1456;&#1492;&#1465;&#1493;&#1464;&#1492; &#1488;&#1457;&#1500;&#1465;&#1492;&#1461;&#1497;&#1504;&#1493; &#1497;&#1456;&#1492;&#1465;&#1493;&#1464;&#1492; &#1488;&#1462;&#1495;&#1464;&#1491;</div>
+<div class="tr">Shemá Israel, Adonai Elokeinu, Adonai Ejad</div>
+<div class="he" style="font-size:15px;color:#b89840">&#1489;&#1464;&#1512;&#1493;&#1468;&#1498;&#1456; &#1513;&#1461;&#1501; &#1499;&#1456;&#1489;&#1493;&#1465;&#1491; &#1502;&#1463;&#1500;&#1456;&#1499;&#1493;&#1468;&#1514;&#1493;&#1465; &#1500;&#1456;&#1506;&#1493;&#1465;&#1500;&#1464;&#1501; &#1493;&#1464;&#1506;&#1462;&#1491;</div>
+<div class="tr">Baruj shem kevod maljutó leolam vaed</div>
+<div class="dl"></div>
+<div class="tx">Y amarás a <em>Adonai</em> tu Di_s de todo tu corazón, y de toda tu alma, y con todas tus fuerzas. Y estas palabras que yo te mando hoy, estarán sobre tu corazón; y las repetirás a tus hijos, y hablarás de ellas estando en tu casa, y andando por el camino, y al acostarte, y cuando te levantes. Y las atarás como una señal en tu mano, y estarán como frontales entre tus ojos; y las escribirás en los postes de tu casa, y en tus puertas.
+<span class="ref">Devarim 6:5-9</span><br/><br/>Y amarás a tu prójimo como a ti mismo.
+<span class="ref">Vayikrá 19:18</span></div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="cur9">0:00</span><span id="tot9">0:00</span>
+      </div>
+      <div class="progress-bar" id="bar9" onclick="saltar(9,event)">
+        <div class="progress-fill" id="fill9" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="pbtn secondary" onclick="retroceder(9)">&#9194; 5s</button>
+      <button class="pbtn primary" id="btnPlay9" onclick="togglePlay(9)">&#9654;</button>
+      <button class="pbtn secondary" onclick="adelantar(9)">5s &#9193;</button>
+    </div>
+    <div class="pstatus" id="st9">Listo para reproducir</div>
+    <div class="card-footer"><button class="bco" id="btn9" onclick="complete(9)">&#10003; Completada</button></div>
+    </div>
+  </div>
+
+  <div class="dscr" id="doneScreen">
+    <div style="font-size:44px;margin-bottom:14px">&#127749;</div>
+    <div style="font-size:20px;color:#e8a830;margin-bottom:8px">Shajarit completado</div>
+    <div style="font-size:13px;color:#c9a830;font-style:italic;margin-bottom:10px">"Levantarse temprano y proclamar..."</div>
+    <div style="font-size:13px;color:#554;line-height:1.7">Que <span style="color:#e8a830">Adonai</span> guíe tu día con sabiduría y misericordia.</div>
+    <button class="breset" onclick="resetAll()">&#8635; Reiniciar</button>
+  </div>
+  <div class="foot">Bet El Shadai · &#1513;&#1463;&#1495;&#1458;&#1512;&#1460;&#1497;&#1514;</div>
+</div>
+<script>
+var TOTAL=9, openCards={}, done={};
+var TEXTS={
+  1:"Doy gracias a Ti, Rey viviente y Padre nuestro, pues Tu misericordiosamente me has permitido despertar a este dia. Abundante es Tu fidelidad. El principio de la sabiduria es el temor de Adonai, buen entendimiento poseen todos quienes lo sienten. Su alabanza perdura por siempre. Bendito sea el Nombre de Su glorioso reinado por la eternidad.",
+  2:"Bendito eres Tu, Adonai, Dios nuestro, Rey del universo, que has creado al ser humano con sabiduria y has formado en su cuerpo orificios y cavidades. Revelado y sabido es delante de Tu trono de gloria, que si uno de ellos se obstruyese o se abriese, no seria posible existir ni una sola hora. Bendito eres Tu, Adonai, que curas a todas las criaturas y actuas maravillosamente.",
+  3:"Bendito eres Tu, Adonai, Dios nuestro, Rey del universo, que nos has santificado con Tus mandamientos y nos has ordenado respecto al mandamiento del tzitzit.",
+  4:"Bendito eres Tu, Adonai, Dios nuestro, Rey del universo, que quita el sueno de mis ojos y la somnolencia de mis parpados. Sea Tu voluntad, Adonai, mi Dios y Dios de mis padres, que me habitues a Tu Tora y me adhieras a Tus mandamientos. No me dejes caer en el pecado, la iniquidad, la tentacion o el menosprecio. Alejame de la mala inclinacion, haz que me apegue a la buena inclinacion y subyuga mis inclinaciones naturales para que te sirvan. Otorgame hoy, y todos los dias, gracia, bondad y misericordia en Tus ojos, y en los ojos de todos los que me vean, y concedeme grandes bondades. Bendito eres Tu, Adonai, que otorga grandes bondades a Su pueblo Ysrael. Sea Tu voluntad, Adonai, que me liberes, hoy y todos los dias, de los insolentes y de la insolencia; de un hombre malvado; de la mala inclinacion, de un mal companero, de un mal vecino, de un tropiezo nefasto, de la envidia, de la maledicencia, de un juicio adverso y de un adversario implacable. He aqui que acepto el precepto de amar a mi projimo como a mi mismo. Y dispongo mi boca para orar delante del Padre, Rey de Reyes, el Santo bendito es.",
+  5:"Bendito eres Tu, Adonai, Dios nuestro, Rey del universo, que nos has santificado con Tus mandamientos y nos has ordenado con respecto al estudio de la Tora. Por favor, oh Eterno, Dios nuestro, haz que las palabras de Tu Tora sean gratas en nuestra boca y en las bocas de todo el pueblo de Ysrael. Que tanto nosotros como nuestros descendientes seamos conocedores de Tu Nombre y estudiosos de Tu Tora por ella misma. Bendito eres Tu, Adonai, que ensena Tora a Tu pueblo Ysrael. Bendito eres Tu, Adonai, Rey del universo, que nos has escogido entre todas las naciones y nos ha otorgado Tu Tora. Bendito eres Tu, Adonai, Dador de la Tora. Sobre tres cosas se sostiene el mundo: sobre el estudio de la Tora, sobre los actos de bondad y sobre los sufrimientos, muerte y resurreccion del Mesias Yeshua.",
+  6:"Dios nuestro y Dios de nuestros antepasados: recuerdanos para bien delante de Ti, y visitanos con salvacion y misericordia desde los cielos. Recuerda el pacto, la bondad y el juramento que le hiciste a nuestro padre Abraham en el monte Moriya, asi como la prueba de Ytzjak por medio de la cual fue atado y elevado en el altar. Acontecio despues de estas cosas que Ha-Elohim probo a Abraham. Y Abraham se levanto temprano por la manana. Al tercer dia diviso el lugar desde lejos. Y dijo: Yo y el muchacho iremos hasta alli y nos postraremos. Luego regresaremos con vosotros. Dijo Abraham: Elohim se proveera el cordero para el holocausto, hijo mio. Abraham construyo el altar, ato a su hijo Ytzjak, y lo puso sobre el altar. El Angel del Eterno llamo desde los cielos y dijo: No extiendas tu mano contra el muchacho, pues ya conozco que eres temeroso de Dios. Abraham tomo el carnero y lo sacrifico en lugar de su hijo. Llamo a aquel lugar Adonai Yireh. Por cuanto has hecho esto, ciertamente te bendecire, y en tu simiente seran benditas todas las naciones de la tierra. Y regreso Abraham a sus mozos. Tambien recuerda para nosotros el amor y la entrega de Yeshua, nuestro Mesias y Redentor, quien con Su muerte y resurreccion confirmo el pacto que juraste a nuestro padre Abraham. Abraham vuestro padre se regocijo de que veria mi dia; y lo vio y se alegro.",
+  7:"Ribono shel olam. Senor del universo. Sea Tu voluntad, Adonai, Dios nuestro y Dios de nuestros antepasados, que Tu recuerdes por nuestro bienestar el pacto de nuestros antepasados; que tal como nuestro padre Abraham contuvo su misericordia por su unico hijo y deseo sacrificarlo para cumplir Tu voluntad, asi pueda Tu misericordia suprimir Tu ira hacia nosotros y nos trates con indulgencia, Adonai nuestro Dios, y con los atributos de bondad y misericordia; que en Tu gran benevolencia hagas retroceder Tu ardiente colera ante Tu pueblo, Tu ciudad, Tu tierra y Tu heredad. Cumple, Adonai, Dios nuestro, la palabra que prometiste: Recordare Mi pacto con Yaacob; tambien Mi Pacto con Yitzjak y de igual forma Mi pacto con Abraham; y la tierra recordare.",
+  8:"Ribon kol haolamim. Senor de todos los mundos. No es gracias a nuestra rectitud que elevamos nuestras suplicas ante Ti, sino gracias a Tu abundante misericordia. Que somos? Que es nuestra vida? Que es nuestra benevolencia? Que es nuestra rectitud? Que es nuestra fortaleza? Que podemos decir ante Ti, Adonai, Dios nuestro y Dios de nuestros antepasados? Pues la mayoria de sus obras son nulas y los dias de sus vidas estan desprovistos de contenido ante Ti. El privilegio de los hombres sobre los animales es inexistente, pues todo es vanidad. Mas nosotros somos Tu pueblo, miembros de Tu pacto, hijos de Abraham, Tu bienamado; somos descendientes de Ytzjak, su unico hijo, quien fue atado sobre el altar; somos la congregacion de Yaacob, Tu primogenito; somos ademas la comunidad de los redimidos por Yeshua el Mesias, quien ratifico el pacto hecho con Abraham, a fin de que la bendicion de Abraham alcanzara primero a Tu pueblo Ysrael y despues a los gentiles. Y por todo esto decimos cada manana:",
+  9:"Shema Israel, Adonai Elokeinu, Adonai Ejad. Baruj shem kevod maljuto leolam vaed. Y amaras a Adonai tu Dios de todo tu corazon, y de toda tu alma, y con todas tus fuerzas. Y estas palabras que yo te mando hoy, estaran sobre tu corazon; y las repetiras a tus hijos, y hablares de ellas estando en tu casa, y andando por el camino, y al acostarte, y cuando te levantes. Y las ataras como una senal en tu mano, y estaran como frontales entre tus ojos; y las escribiras en los postes de tu casa, y en tus puertas. Y amaras a tu projimo como a ti mismo."
+};
+
+/* ===== PLAYER ENGINE — misma lógica que prueba-audio ===== */
+var velocidad = 1.2;
+var activeN = null;
+var reproduciendo = false;
+var pausado = false;
+var tiempoAcumulado = 0;
+var tiempoInicio = 0;
+var duracionTotal = 0;
+var timerProgreso = null;
+
+function calcularDuracion(n, vel) {
+  if (!TEXTS[n]) return 60;
+  var palabras = TEXTS[n].split(/\s+/).length;
+  return Math.round((palabras / (130 * (vel || velocidad))) * 60);
+}
+function formatTime(s) {
+  s = Math.max(0, Math.round(s));
+  return Math.floor(s/60) + ':' + (s%60 < 10 ? '0' : '') + s%60;
+}
+function initTotal(n) {
+  duracionTotal = calcularDuracion(n, velocidad);
+  var el = document.getElementById('tot'+n);
+  if (el) el.textContent = formatTime(duracionTotal);
+}
+function stopCurrent() {
+  window.speechSynthesis.cancel();
+  clearInterval(timerProgreso);
+  if (activeN !== null) {
+    var pn = activeN;
+    var btn = document.getElementById('btnPlay'+pn);
+    var st = document.getElementById('st'+pn);
+    if (btn) btn.textContent = '▶';
+    if (st) st.textContent = 'Listo para reproducir';
+  }
+  reproduciendo = false; pausado = false; activeN = null; tiempoAcumulado = 0;
+}
+function hablar(n, desde) {
+  if (activeN !== null && activeN !== n) stopCurrent();
+  window.speechSynthesis.cancel();
+  clearInterval(timerProgreso);
+  if (!TEXTS[n]) return;
+  var palabras = TEXTS[n].split(/\s+/);
+  duracionTotal = calcularDuracion(n, velocidad);
+  var pct = (desde !== undefined) ? Math.max(0, Math.min(desde, 1)) : (tiempoAcumulado / Math.max(duracionTotal, 1));
+  var wordIndex = Math.floor(pct * palabras.length);
+  var textoParcial = palabras.slice(wordIndex).join(' ');
+  if (!textoParcial.trim()) return;
+  var u = new SpeechSynthesisUtterance(textoParcial);
+  u.lang = 'es-ES'; u.rate = velocidad;
+  var v = window.speechSynthesis.getVoices().find(function(x){ return x.lang.startsWith('es'); });
+  if (v) u.voice = v;
+  tiempoAcumulado = pct * duracionTotal;
+  tiempoInicio = Date.now() - (tiempoAcumulado * 1000);
+  activeN = n;
+  u.onstart = function() {
+    reproduciendo = true; pausado = false;
+    var btn = document.getElementById('btnPlay'+n), st = document.getElementById('st'+n);
+    if (btn) btn.textContent = '⏸';
+    if (st) st.textContent = 'Reproduciendo...';
+    iniciarTimer(n);
+  };
+  u.onend = function() {
+    if (!pausado) {
+      reproduciendo = false; activeN = null;
+      var btn = document.getElementById('btnPlay'+n), st = document.getElementById('st'+n);
+      var rel = document.getElementById('fill'+n), cur = document.getElementById('cur'+n);
+      if (btn) btn.textContent = '▶';
+      if (st) st.textContent = 'Completada ✓';
+      if (rel) rel.style.width = '100%';
+      if (cur) cur.textContent = formatTime(duracionTotal);
+      clearInterval(timerProgreso); tiempoAcumulado = 0;
+    }
+  };
+  u.onerror = function() {
+    reproduciendo = false;
+    var btn = document.getElementById('btnPlay'+n);
+    if (btn) btn.textContent = '▶';
+    clearInterval(timerProgreso);
+  };
+  window.speechSynthesis.speak(u);
+}
+function iniciarTimer(n) {
+  clearInterval(timerProgreso);
+  timerProgreso = setInterval(function() {
+    var elapsed = (Date.now() - tiempoInicio) / 1000;
+    var pct = Math.min(elapsed / duracionTotal, 1);
+    var rel = document.getElementById('fill'+n), cur = document.getElementById('cur'+n);
+    if (rel) rel.style.width = (pct*100)+'%';
+    if (cur) cur.textContent = formatTime(Math.min(elapsed, duracionTotal));
+    tiempoAcumulado = elapsed;
+    if (pct >= 1) clearInterval(timerProgreso);
+  }, 200);
+}
+function togglePlay(n) {
+  if (activeN !== null && activeN !== n) stopCurrent();
+  if (!reproduciendo && !pausado) {
+    hablar(n, tiempoAcumulado / Math.max(duracionTotal,1));
+  } else if (reproduciendo && activeN === n) {
+    pausado = true; reproduciendo = false;
+    tiempoAcumulado = (Date.now() - tiempoInicio) / 1000;
+    window.speechSynthesis.cancel(); clearInterval(timerProgreso);
+    var btn = document.getElementById('btnPlay'+n), st = document.getElementById('st'+n);
+    if (btn) btn.textContent = '▶';
+    if (st) st.textContent = 'Pausado';
+  } else if (pausado && activeN === n) {
+    pausado = false;
+    hablar(n, tiempoAcumulado / Math.max(duracionTotal,1));
+  }
+}
+function adelantar(n) {
+  if (activeN !== null && activeN !== n) stopCurrent();
+  if (activeN !== n) { duracionTotal = calcularDuracion(n, velocidad); tiempoAcumulado = 0; }
+  var nuevoPct = Math.min((tiempoAcumulado + 5) / duracionTotal, 1);
+  tiempoAcumulado = nuevoPct * duracionTotal;
+  if (reproduciendo || pausado) { pausado = false; hablar(n, nuevoPct); }
+  else { var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n); if(r)r.style.width=(nuevoPct*100)+'%'; if(c)c.textContent=formatTime(tiempoAcumulado); }
+}
+function retroceder(n) {
+  if (activeN !== null && activeN !== n) stopCurrent();
+  if (activeN !== n) { duracionTotal = calcularDuracion(n, velocidad); tiempoAcumulado = 0; }
+  var nuevoPct = Math.max((tiempoAcumulado - 5) / duracionTotal, 0);
+  tiempoAcumulado = nuevoPct * duracionTotal;
+  if (reproduciendo || pausado) { pausado = false; hablar(n, nuevoPct); }
+  else { var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n); if(r)r.style.width=(nuevoPct*100)+'%'; if(c)c.textContent=formatTime(tiempoAcumulado); }
+}
+function saltar(n, e) {
+  if (activeN !== null && activeN !== n) stopCurrent();
+  if (activeN !== n) { duracionTotal = calcularDuracion(n, velocidad); tiempoAcumulado = 0; }
+  var barra = document.getElementById('bar'+n); if (!barra) return;
+  var rect = barra.getBoundingClientRect();
+  var pct = Math.max(0, Math.min((e.clientX - rect.left) / rect.width, 1));
+  tiempoAcumulado = pct * duracionTotal;
+  var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);
+  if(r)r.style.width=(pct*100)+'%'; if(c)c.textContent=formatTime(tiempoAcumulado);
+  if (reproduciendo || pausado) { pausado = false; hablar(n, pct); }
+}
+function cambiarVel(v) {
+  velocidad = parseFloat(v);
+  document.getElementById('velLabel').textContent = parseFloat(v).toFixed(1)+'×';
+  if (reproduciendo && activeN !== null) hablar(activeN, tiempoAcumulado / Math.max(duracionTotal,1));
+}
+window.speechSynthesis.onvoiceschanged = function() { for(var i=1;i<=TOTAL;i++) initTotal(i); };
+
+/* ===== APP LOGIC ===== */
+function buildDots(){
+  var c=document.getElementById('progressDots'); c.innerHTML='';
+  for(var i=1;i<=TOTAL;i++){
+    var d=document.createElement('div');
+    d.className='pd'+(done[i]?' done':(openCards[i]?' active':''));
+    (function(n){d.onclick=function(){toggle(n)}})(i);
+    c.appendChild(d);
+  }
+  var count=Object.keys(done).length;
+  document.getElementById('progLabel').textContent=
+    count===0?'Toca cada sección al completarla':
+    count===TOTAL?'¡Shajarit completado! 🌅':
+    count+' de '+TOTAL+' secciones completadas';
+}
+function toggle(n){
+  openCards[n]=!openCards[n];
+  document.getElementById('body'+n).classList.toggle('open',!!openCards[n]);
+  document.getElementById('arrow'+n).classList.toggle('open',!!openCards[n]);
+  if(openCards[n]) initTotal(n);
+  buildDots();
+}
+function complete(n){
+  if(activeN===n) stopCurrent();
+  done[n]=true;
+  var btn=document.getElementById('btn'+n); btn.textContent='✓ Completada'; btn.classList.add('done');
+  openCards[n]=false;
+  document.getElementById('body'+n).classList.remove('open');
+  document.getElementById('arrow'+n).classList.remove('open');
+  if(n<TOTAL){
+    openCards[n+1]=true;
+    document.getElementById('body'+(n+1)).classList.add('open');
+    document.getElementById('arrow'+(n+1)).classList.add('open');
+    initTotal(n+1);
+    setTimeout(function(){document.getElementById('body'+(n+1)).scrollIntoView({behavior:'smooth',block:'start'});},150);
+  }
+  buildDots();
+  if(Object.keys(done).length===TOTAL){setTimeout(function(){var ds=document.getElementById('doneScreen');ds.classList.add('show');ds.scrollIntoView({behavior:'smooth'});},400);}
+}
+function resetAll(){
+  stopCurrent(); openCards={}; done={};
+  for(var i=1;i<=TOTAL;i++){
+    var btn=document.getElementById('btn'+i); btn.textContent='✓ Completada'; btn.classList.remove('done');
+    document.getElementById('body'+i).classList.remove('open');
+    document.getElementById('arrow'+i).classList.remove('open');
+    var r=document.getElementById('fill'+i),c=document.getElementById('cur'+i),t=document.getElementById('tot'+i),b=document.getElementById('btnPlay'+i),s=document.getElementById('st'+i);
+    if(r)r.style.width='0%'; if(c)c.textContent='0:00'; if(t)t.textContent='0:00';
+    if(b)b.textContent='▶'; if(s)s.textContent='Listo para reproducir';
+  }
+  document.getElementById('doneScreen').classList.remove('show');
+  buildDots(); window.scrollTo({top:0,behavior:'smooth'});
+}
+buildDots(); toggle(1); initTotal(1);
+</script>
+</body>
+</html>
