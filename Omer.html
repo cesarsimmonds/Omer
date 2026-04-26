@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#0f0a1e"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Ómer"/>
+<link rel="manifest" href="manifest.json"/>
+<title>ספירת העומר — Ómer 5786</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:Georgia,'Times New Roman',serif;
+  background:#0f0a1e;
+  min-height:100vh;
+  color:#f0e8d0;
+  overflow-x:hidden;
+}
+.root{
+  max-width:440px;
+  margin:0 auto;
+  padding:0 14px 60px;
+}
+.header{
+  text-align:center;
+  padding:30px 0 14px;
+}
+.title-he{
+  font-size:26px;
+  color:#c9a84c;
+  direction:rtl;
+  text-shadow:0 0 28px rgba(201,168,76,0.4);
+  margin-bottom:4px;
+}
+.title-sub{
+  font-size:10px;
+  color:#443;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+}
+.badge{
+  display:flex;
+  justify-content:center;
+  margin-bottom:12px;
+}
+.badge span{
+  padding:4px 16px;
+  border-radius:999px;
+  font-size:12px;
+  letter-spacing:0.08em;
+}
+.badge.night span{background:rgba(201,168,76,0.13);border:1px solid rgba(201,168,76,0.4);color:#e8c97a}
+.badge.day span{background:rgba(100,140,255,0.1);border:1px solid rgba(100,140,255,0.3);color:#a0b4ff}
+.card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(201,168,76,0.22);
+  border-radius:16px;
+  padding:18px 16px;
+  margin-bottom:10px;
+}
+.day-card{text-align:center;padding:26px 16px}
+.day-num{
+  font-size:80px;
+  font-weight:700;
+  color:#c9a84c;
+  line-height:1;
+  text-shadow:0 0 50px rgba(201,168,76,0.5);
+}
+.day-he{
+  font-size:22px;
+  color:#c9a84c;
+  direction:rtl;
+  margin:4px 0 10px;
+}
+.day-label{font-size:11px;color:#554;letter-spacing:0.14em;text-transform:uppercase}
+.day-weeks{font-size:15px;color:#c8b88a;margin-top:10px}
+.day-weeks strong{color:#e8c97a}
+.section-label{font-size:10px;color:#554;letter-spacing:0.18em;text-align:center;text-transform:uppercase;margin-bottom:6px}
+.sef-he{font-size:19px;color:#c9a84c;direction:rtl;text-align:center;margin:4px 0 2px}
+.sef-es{font-size:13px;color:#bba;font-style:italic;text-align:center}
+.sef-def{font-size:11px;color:#443;text-align:center;margin-top:4px}
+.btn{
+  width:100%;
+  padding:13px;
+  border-radius:13px;
+  margin-bottom:8px;
+  font-family:Georgia,serif;
+  font-size:14px;
+  cursor:pointer;
+  border:1px solid rgba(201,168,76,0.28);
+  background:rgba(255,255,255,0.03);
+  color:#e8c97a;
+  transition:background 0.2s;
+}
+.btn.active{background:rgba(201,168,76,0.1)}
+.btn.settings{border-color:rgba(255,255,255,0.07);color:#443;font-size:12px}
+.beracha-he{
+  direction:rtl;
+  text-align:right;
+  line-height:2;
+  font-size:16px;
+  color:#f0e8d0;
+  margin-bottom:10px;
+}
+.beracha-he .gold{color:#e8c97a;font-weight:bold}
+.count-box{
+  direction:rtl;
+  text-align:right;
+  background:rgba(201,168,76,0.07);
+  border:1px solid rgba(201,168,76,0.18);
+  border-radius:9px;
+  padding:10px 14px;
+  font-size:15px;
+  color:#e8c97a;
+  line-height:1.9;
+  margin-bottom:12px;
+}
+.beracha-es{
+  font-size:13px;
+  color:#665;
+  text-align:center;
+  font-style:italic;
+  line-height:1.8;
+}
+.beracha-es strong{color:#c8b88a;font-style:normal}
+.progress-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:12px;color:#554}
+.progress-row span.gold{color:#e8c97a}
+.bar-bg{background:rgba(255,255,255,0.07);border-radius:999px;height:6px;overflow:hidden;margin-bottom:12px}
+.bar-fill{height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 1s ease}
+.dots{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.09)}
+.dot.done{background:#c9a84c;box-shadow:0 0 3px rgba(201,168,76,0.5)}
+.dot.current{background:#ffe082;box-shadow:0 0 10px #ffe082;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 6px rgba(255,224,130,0.7);transform:scale(1)}50%{box-shadow:0 0 14px #ffe082;transform:scale(1.3)}}
+.settings-row{display:flex;align-items:center;justify-content:space-between}
+.settings-row span{color:#665;font-size:13px}
+input[type=time]{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(201,168,76,0.3);
+  border-radius:8px;
+  padding:5px 9px;
+  color:#e8c97a;
+  font-size:15px;
+  font-family:Georgia,serif;
+}
+.footer{text-align:center;color:#332;font-size:10px;padding-top:14px;letter-spacing:0.05em}
+.special{text-align:center;padding:60px 20px}
+.special .big{font-size:28px;color:#c9a84c;direction:rtl;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="root" id="app">
+  <div class="header">
+    <div class="title-he">ספירת העומר</div>
+    <div class="title-sub">Conteo del Ómer · 5786</div>
+  </div>
+  <div id="content"></div>
+</div>
+
+<script>
+// ===== DATOS =====
+var HN={1:"א",2:"ב",3:"ג",4:"ד",5:"ה",6:"ו",7:"ז",8:"ח",9:"ט",10:"י",11:"יא",12:"יב",13:"יג",14:"יד",15:"טו",16:"טז",17:"יז",18:"יח",19:"יט",20:"כ",21:"כא",22:"כב",23:"כג",24:"כד",25:"כה",26:"כו",27:"כז",28:"כח",29:"כט",30:"ל",31:"לא",32:"לב",33:"לג",34:"לד",35:"לה",36:"לו",37:"לז",38:"לח",39:"לט",40:"מ",41:"מא",42:"מב",43:"מג",44:"מד",45:"מה",46:"מו",47:"מז",48:"מח",49:"מט"};
+var WH=["","שָׁבוּעַ אֶחָד","שְׁנֵי שָׁבוּעוֹת","שְׁלֹשָׁה שָׁבוּעוֹת","אַרְבָּעָה שָׁבוּעוֹת","חֲמִשָּׁה שָׁבוּעוֹת","שִׁשָּׁה שָׁבוּעוֹת","שִׁבְעָה שָׁבוּעוֹת"];
+var DH=["","וְיוֹם אֶחָד","וּשְׁנֵי יָמִים","וּשְׁלֹשָׁה יָמִים","וְאַרְבָּעָה יָמִים","וַחֲמִשָּׁה יָמִים","וְשִׁשָּׁה יָמִים"];
+var SH=["חֶסֶד","גְּבוּרָה","תִּפְאֶרֶת","נֶצַח","הוֹד","יְסוֹד","מַלְכוּת"];
+var SE=["Chesed","Gevurá","Tiferet","Netzaj","Hod","Yesod","Maljut"];
+var SD=["Amor / Misericordia","Fortaleza / Juicio","Belleza / Armonía","Victoria / Eternidad","Gloria / Gratitud","Fundamento / Conexión","Reinado / Presencia"];
+
+// Ómer 5786: día 1 se cuenta la noche del 2 de abril de 2026
+var OMER_REF = new Date(2026,3,2); // April 2
+
+var nightfall = parseInt(localStorage.getItem('nf')||'') || (19*60+50);
+var showB = false, showS = false;
+
+function getDay(now){
+  var hm = now.getHours()*60+now.getMinutes();
+  var ref = new Date(now); ref.setHours(0,0,0,0);
+  if(hm < nightfall) ref.setDate(ref.getDate()-1);
+  var base = new Date(OMER_REF); base.setHours(0,0,0,0);
+  return Math.round((ref-base)/864e5)+1;
+}
+
+function countHe(day){
+  if(day<7) return "הַיּוֹם "+HN[day]+" יָמִים לָעֹמֶר";
+  var w=Math.floor(day/7),d=day%7;
+  return "הַיּוֹם "+HN[day]+" יוֹם, שֶׁהֵם "+WH[w]+(d>0?" "+DH[d]:"")+" לָעֹמֶר";
+}
+
+function weekEs(day){
+  var w=Math.floor(day/7),d=day%7;
+  if(w===0) return day+" día"+(day>1?"s":"");
+  if(d===0) return w+" semana"+(w>1?"s":"")+" completa"+(w>1?"s":"");
+  return w+" sem. y "+d+" día"+(d>1?"s":"");
+}
+
+// Formato de conteo Bet El Shadai
+var WES=["","una semana","dos semanas","tres semanas","cuatro semanas","cinco semanas","seis semanas","siete semanas"];
+var DES=["","un día","dos días","tres días","cuatro días","cinco días","seis días"];
+
+function countEs(day){
+  var w=Math.floor(day/7),d=day%7;
+  var verb=day===1?"es":"son";
+  var dias=day===1?"1 día":""+day+" días";
+  if(w===0) return "Hoy "+verb+" "+dias+" del Ómer.";
+  if(d===0) return "Hoy son "+day+" días que son "+WES[w]+" del Ómer.";
+  return "Hoy son "+day+" días que son "+WES[w]+" y "+DES[d]+" del Ómer.";
+}
+
+function nfStr(){
+  var h=Math.floor(nightfall/60),m=nightfall%60;
+  return (h<10?"0":"")+h+":"+(m<10?"0":"")+m;
+}
+
+function render(){
+  var now=new Date();
+  var day=getDay(now);
+  var hm=now.getHours()*60+now.getMinutes();
+  var isNight=hm>=nightfall;
+  var c=document.getElementById('content');
+
+  if(day<1){
+    c.innerHTML='<div class="card special"><div class="big">ספירת העומר</div><p style="color:#bba">El Ómer comienza la noche del<br/><strong style="color:#e8c97a">2 de Abril de 2026</strong></p></div>';
+    return;
+  }
+  if(day>49){
+    c.innerHTML='<div class="card special"><div class="big">שָׁבוּעוֹת</div><p style="color:#e8c97a;font-size:18px;margin-bottom:8px">¡Shavuot!</p><p style="color:#bba">49 días completados.<br/>¡Jag Shavuot Sameaj!</p></div>';
+    return;
+  }
+
+  var w=Math.floor((day-1)/7), d=(day-1)%7;
+  var pct=Math.round((day/49)*100);
+
+  // dots
+  var dotsHtml='';
+  for(var i=1;i<=49;i++){
+    var cls='dot'+(i<day?' done':i===day?' current':'');
+    dotsHtml+='<div class="'+cls+'"></div>';
+  }
+
+  var berachaHtml='';
+  if(showB){
+    berachaHtml='<div class="card">'+
+      '<div class="section-label">✦ Berajá ✦</div>'+
+      '<div class="beracha-he">בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ <span class="gold">עַל סְפִירַת הָעֹמֶר</span></div>'+
+      '<div class="count-box">'+countHe(day)+'</div>'+
+      '<div class="beracha-es">Bendito eres Tú, Adonai nuestro Dios, Rey del universo,<br/>que nos ha santificado con Sus mandamientos,<br/>y nos ha ordenado lo concerniente<br/>a la cuenta del Ómer.<br/><br/><strong>'+countEs(day)+'</strong></div>'+
+      '</div>';
+  }
+
+  var settingsHtml='';
+  if(showS){
+    settingsHtml='<div class="card" style="padding:12px 14px">'+
+      '<div class="settings-row">'+
+      '<span>Entrada de estrellas</span>'+
+      '<input type="time" value="'+nfStr()+'" onchange="updateNf(this.value)"/>'+
+      '</div>'+
+      '<p style="color:#443;font-size:11px;text-align:center;margin-top:6px">Puerto Montt · ajusta según tu zona</p>'+
+      '</div>';
+  }
+
+  c.innerHTML=
+    '<div class="badge '+(isNight?'night':'day')+'"><span>'+(isNight?'🌟 Tiempo de contar':'☀️ Esta noche: día '+day+' (después '+nfStr()+')')+'</span></div>'+
+
+    '<div class="card day-card">'+
+      '<div class="day-num">'+day+'</div>'+
+      '<div class="day-he">'+HN[day]+'</div>'+
+      '<div class="day-label">Día del Ómer</div>'+
+      '<div class="day-weeks"><strong>'+weekEs(day)+'</strong> <span style="color:#554">de 49</span></div>'+
+    '</div>'+
+
+    '<div class="card">'+
+      '<div class="section-label">✦ Sefiráh del Día ✦</div>'+
+      '<div class="sef-he">'+SH[d]+' שֶׁבְּ'+SH[w]+'</div>'+
+      '<div class="sef-es">'+SE[d]+' dentro de '+SE[w]+'</div>'+
+      '<div class="sef-def">'+SD[d]+' · '+SD[w]+'</div>'+
+    '</div>'+
+
+    '<button class="btn'+(showB?' active':'')+'" onclick="toggleB()">'+
+      (showB?'▲ Ocultar berajá':'▼ Berajá y conteo')+
+    '</button>'+
+    berachaHtml+
+
+    '<div class="card">'+
+      '<div class="progress-row"><span>Hacia Shavuot</span><span class="gold">'+day+'/49</span></div>'+
+      '<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%"></div></div>'+
+      '<div class="dots">'+dotsHtml+'</div>'+
+    '</div>'+
+
+    '<button class="btn settings" onclick="toggleS()">⚙ Tzet hakokavim: '+nfStr()+'</button>'+
+    settingsHtml+
+
+    '<div class="footer">Bet El Shadai · ספירת העומר תשפ״ו</div>';
+}
+
+function toggleB(){showB=!showB;render();}
+function toggleS(){showS=!showS;render();}
+function updateNf(val){
+  var parts=val.split(':');
+  if(parts.length===2){
+    var h=parseInt(parts[0]),m=parseInt(parts[1]);
+    if(!isNaN(h)&&!isNaN(m)){nightfall=h*60+m;localStorage.setItem('nf',nightfall);render();}
+  }
+}
+
+render();
+setInterval(render,60000);
+
+// Registrar Service Worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
