@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#0f0a1e"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Oraciones"/>
+<title>Oraciones antes de dormir — Bet El Shadai</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Georgia,serif;background:#0f0a1e;min-height:100vh;color:#f0e8d0;overflow-x:hidden}
+.root{max-width:440px;margin:0 auto;padding:0 14px 60px}
+.header{text-align:center;padding:28px 0 16px}
+.title-he{font-size:24px;color:#c9a84c;direction:rtl;text-shadow:0 0 28px rgba(201,168,76,0.4);margin-bottom:4px}
+.title-sub{font-size:10px;color:#443;letter-spacing:0.2em;text-transform:uppercase}
+.speed-bar{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.speed-bar span{font-size:12px;color:#665;white-space:nowrap}
+.speed-bar input[type=range]{flex:1;accent-color:#c9a84c;cursor:pointer}
+.speed-bar label{font-size:13px;color:#e8c97a;min-width:34px;text-align:right}
+.prog-wrap{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);border-radius:16px;padding:14px 16px;margin-bottom:10px}
+.progress-bar{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:8px}
+.prog-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;cursor:pointer;flex-shrink:0}
+.prog-dot.done{background:#c9a84c;box-shadow:0 0 5px rgba(201,168,76,0.5);border-color:#c9a84c}
+.prog-dot.active{background:#ffe082;box-shadow:0 0 10px #ffe082;border-color:#ffe082}
+.prog-label{text-align:center;font-size:11px;color:#443}
+.prayer-card{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.prayer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:10px}
+.phi{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.pi2{font-size:18px;flex-shrink:0}
+.pi3{flex:1;min-width:0}
+.pt{font-size:14px;color:#e8c97a;font-weight:normal;line-height:1.3}
+.ps{font-size:10px;color:#554;margin-top:2px}
+.pa{font-size:11px;color:#443;transition:transform 0.3s;flex-shrink:0}
+.pa.open{transform:rotate(180deg)}
+.pb{display:none;padding:0 16px 16px;border-top:1px solid rgba(201,168,76,0.12)}
+.pb.open{display:block}
+.tx{font-size:14.5px;line-height:1.85;color:#e8e0cc;margin-top:14px}
+.tx em{color:#c9a84c;font-style:normal;font-weight:bold}
+.ref{font-size:11px;color:#443;text-align:right;margin-top:10px;font-style:italic}
+.she{direction:rtl;text-align:center;font-size:20px;color:#c9a84c;line-height:1.9;margin:14px 0 6px;text-shadow:0 0 20px rgba(201,168,76,0.3)}
+.str{text-align:center;font-size:13px;color:#776;font-style:italic;margin-bottom:14px;line-height:1.6}
+.dl{height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,0.3),transparent);margin:14px 0}
+.ab{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:8px}
+.bsp{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:999px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.07);color:#c9a84c;font-size:12px;font-family:Georgia,serif;cursor:pointer;flex-shrink:0}
+.bsp.playing{background:rgba(201,168,76,0.2);border-color:#c9a84c;color:#ffe082;animation:glow 1.2s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(201,168,76,0)}50%{box-shadow:0 0 12px rgba(201,168,76,0.45)}}
+.bco{padding:7px 16px;border-radius:13px;font-family:Georgia,serif;font-size:13px;cursor:pointer;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.08);color:#e8c97a}
+.bco.done{border-color:rgba(100,200,100,0.3);background:rgba(100,200,100,0.07);color:#8dcc8d}
+.ds{text-align:center;padding:50px 20px;display:none}
+.ds.show{display:block}
+.breset{margin-top:20px;padding:10px 24px;border-radius:999px;font-family:Georgia,serif;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:#443}
+.foot{text-align:center;color:#332;font-size:10px;padding-top:18px;letter-spacing:0.05em}
+
+/* === Player === */
+.player-wrap{margin:14px 0 10px}
+.player-label{display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px}
+.player-bar{width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;position:relative;overflow:hidden}
+.player-fill{height:100%;border-radius:999px;transition:width 0.3s;pointer-events:none}
+.player-controls{display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px}
+.pbtn{padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:14px;cursor:pointer;transition:background 0.2s}
+.pbtn:active{filter:brightness(1.2)}
+.pbtn.primary{font-size:20px;padding:12px 28px}
+.pbtn.secondary{font-size:16px}
+.pstatus{text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic}
+.card-footer{display:flex;justify-content:flex-end}
+.spbar{border-radius:12px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.spbar span{font-size:12px;color:#665;white-space:nowrap}
+.spbar input[type=range]{flex:1;cursor:pointer}
+.spbar label{font-size:13px;min-width:34px;text-align:right}
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <div class="title-he">תְּפִלַּת הַלַּיְלָה</div>
+    <div class="title-sub">Oraciones antes de dormir · Bet El Shadai</div>
+  </div>
+  <div class="speed-bar">
+    <span>🔊 Velocidad</span>
+    <input type="range" min="0.5" max="2.0" step="0.1" value="1.2" oninput="cambiarVel(this.value)"/>
+    <label id="velLabel">1.2×</label>
+  </div>
+  <div class="prog-wrap">
+    <div class="progress-bar" id="progressDots"></div>
+    <div class="prog-label" id="progLabel">Toca cada oración al completarla</div>
+  </div>
+
+  <!-- 1 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(1)">
+      <div class="phi"><span class="pi2">🕊️</span><div class="pi3"><div class="pt">Oración del Perdón</div><div class="ps">Antes de dormir · 1 min</div></div></div>
+      <span class="pa" id="arrow1">▼</span>
+    </div>
+    <div class="pb" id="body1">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Rey del universo y Redentor nuestro. He aquí que perdono a cualquiera que me haya irritado o pecado contra mí; ya sea en forma accidental o intencional, ya sea de forma verbal o de otra manera.<br/><br/>Perdona también en el Nombre de <em>Yeshua</em> las faltas que cometí en este día. Sea Tu voluntad, <em>Adonai</em>, Di_s mío y Di_s de mis antepasados, que yo no incurra más en pecado.<br/><br/>Que los dichos de mi boca y los pensamientos de mi corazón hallen favor ante Ti, <em>Adonai</em>, mi Roca y mi Redentor. Todo esto te lo pido y te doy las gracias en el Nombre de <em>Yeshua</em>.</div>
+      <div style="margin:14px 0 10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px"><span id="cur1">0:00</span><span id="tot1">0:00</span></div><div id="bar1" onclick="saltar(1,event)" style="width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;overflow:hidden;margin-bottom:10px"><div id="fill1" style="width:0%;height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 0.3s"></div></div><div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px"><button onclick="retroceder(1)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">⏪ 5s</button><button id="btnPlay1" onclick="togglePlay(1)" style="padding:12px 28px;border-radius:999px;font-family:Georgia,serif;font-size:20px;cursor:pointer;border:1px solid #c9a84c;background:rgba(255,255,255,0.06);color:#e8c97a">▶</button><button onclick="adelantar(1)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">5s ⏩</button></div><div id="st1" style="text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic">Listo para reproducir</div></div><div style="display:flex;justify-content:flex-end"><button class="btn-complete" id="btn1" onclick="complete(1)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(2)">
+      <div class="phi"><span class="pi2">🙏</span><div class="pi3"><div class="pt">Oración Privada</div><div class="ps">Conversación personal con Dios</div></div></div>
+      <span class="pa" id="arrow2">▼</span>
+    </div>
+    <div class="pb" id="body2">
+      <div class="tx" style="color:#665;font-style:italic;text-align:center;padding:10px 0">Momento personal de oración libre.<br/>Habla con Dios desde tu corazón.</div>
+      <div class="ab"><div></div><button class="bco" id="btn2" onclick="complete(2)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(3)">
+      <div class="phi"><span class="pi2">🌙</span><div class="pi3"><div class="pt">HaMapil — הַמַּפִּיל</div><div class="ps">Bendición del sueño · 1 min</div></div></div>
+      <span class="pa" id="arrow3">▼</span>
+    </div>
+    <div class="pb" id="body3">
+      <div class="tx">Bendito eres Tú, <em>Adonai</em>, Rey del universo y Redentor nuestro, que pones las ataduras del sueño sobre mis ojos y la somnolencia sobre mis párpados.<br/><br/>Sea Tu voluntad, Di_s mío y Di_s de mis antepasados, que me acueste a dormir en paz y me levante en paz. Que no tenga ningún tipo de pesadillas ni sueños impuros o malignos, que mi descendencia sea perfecta delante de Ti e ilumines mis ojos para que no muera durante el sueño, pues eres Tú el que iluminas la niña del ojo.<br/><br/>Bendito eres Tú, <em>Adonai</em>, que ilumina al mundo entero con Tu gloria.</div>
+      <div style="margin:14px 0 10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px"><span id="cur3">0:00</span><span id="tot3">0:00</span></div><div id="bar3" onclick="saltar(3,event)" style="width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;overflow:hidden;margin-bottom:10px"><div id="fill3" style="width:0%;height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 0.3s"></div></div><div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px"><button onclick="retroceder(3)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">⏪ 5s</button><button id="btnPlay3" onclick="togglePlay(3)" style="padding:12px 28px;border-radius:999px;font-family:Georgia,serif;font-size:20px;cursor:pointer;border:1px solid #c9a84c;background:rgba(255,255,255,0.06);color:#e8c97a">▶</button><button onclick="adelantar(3)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">5s ⏩</button></div><div id="st3" style="text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic">Listo para reproducir</div></div><div style="display:flex;justify-content:flex-end"><button class="btn-complete" id="btn3" onclick="complete(3)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(4)">
+      <div class="phi"><span class="pi2">✡️</span><div class="pi3"><div class="pt">Declaración del Shemá</div><div class="ps">Devarim 6:4-9 · 2 min</div></div></div>
+      <span class="pa" id="arrow4">▼</span>
+    </div>
+    <div class="pb" id="body4">
+      <div class="she">שְׁמַע יִשְׂרָאֵל<br/>יְהֹוָה אֱלֹהֵינוּ<br/>יְהֹוָה אֶחָד</div>
+      <div class="str">Shemá Israel, Adonai Elokeinu, Adonai Ejad</div>
+      <div class="she" style="font-size:16px;color:#bba">בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</div>
+      <div class="str">Baruj shem kevod maljutó leolam vaed</div>
+      <div class="dl"></div>
+      <div class="tx">Y amarás a <em>Hashem</em> tu Di_s de todo tu corazón, y de toda tu alma, y con todas tus fuerzas. Y estas palabras que yo te mando hoy, estarán sobre tu corazón; y las repetirás a tus hijos, y hablarás de ellas estando en tu casa, y andando por el camino, y al acostarte, y cuando te levantes. Y las atarás como una señal en tu mano, y estarán como frontales entre tus ojos; y las escribirás en los postes de tu casa, y en tus puertas.</div>
+      <div class="ref">Devarim 6:5-9</div>
+      <div style="margin:14px 0 10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px"><span id="cur4">0:00</span><span id="tot4">0:00</span></div><div id="bar4" onclick="saltar(4,event)" style="width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;overflow:hidden;margin-bottom:10px"><div id="fill4" style="width:0%;height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 0.3s"></div></div><div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px"><button onclick="retroceder(4)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">⏪ 5s</button><button id="btnPlay4" onclick="togglePlay(4)" style="padding:12px 28px;border-radius:999px;font-family:Georgia,serif;font-size:20px;cursor:pointer;border:1px solid #c9a84c;background:rgba(255,255,255,0.06);color:#e8c97a">▶</button><button onclick="adelantar(4)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">5s ⏩</button></div><div id="st4" style="text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic">Listo para reproducir</div></div><div style="display:flex;justify-content:flex-end"><button class="btn-complete" id="btn4" onclick="complete(4)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(5)">
+      <div class="phi"><span class="pi2">🕊️</span><div class="pi3"><div class="pt">Tehilim 4:8</div><div class="ps">Salmo de paz nocturna</div></div></div>
+      <span class="pa" id="arrow5">▼</span>
+    </div>
+    <div class="pb" id="body5">
+      <div class="tx" style="text-align:center;font-size:16px;font-style:italic;padding:8px 0">En paz me acostaré, y asimismo dormiré,<br/>porque solo Tú, <em>Adonai</em>, me haces vivir confiado.</div>
+      <div class="ref">Tehilim 4:8</div>
+      <div style="margin:14px 0 10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px"><span id="cur5">0:00</span><span id="tot5">0:00</span></div><div id="bar5" onclick="saltar(5,event)" style="width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;overflow:hidden;margin-bottom:10px"><div id="fill5" style="width:0%;height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 0.3s"></div></div><div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px"><button onclick="retroceder(5)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">⏪ 5s</button><button id="btnPlay5" onclick="togglePlay(5)" style="padding:12px 28px;border-radius:999px;font-family:Georgia,serif;font-size:20px;cursor:pointer;border:1px solid #c9a84c;background:rgba(255,255,255,0.06);color:#e8c97a">▶</button><button onclick="adelantar(5)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">5s ⏩</button></div><div id="st5" style="text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic">Listo para reproducir</div></div><div style="display:flex;justify-content:flex-end"><button class="btn-complete" id="btn5" onclick="complete(5)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="prayer-card">
+    <div class="prayer-header" onclick="toggle(6)">
+      <div class="phi"><span class="pi2">🛡️</span><div class="pi3"><div class="pt">Tehilim 91</div><div class="ps">El que habita al abrigo del Altísimo · 3 min</div></div></div>
+      <span class="pa" id="arrow6">▼</span>
+    </div>
+    <div class="pb" id="body6">
+      <div class="tx">El que habita al abrigo del Altísimo, morará bajo la sombra del Omnipotente. Diré yo a <em>Adonai</em>: Esperanza mía y castillo mío; mi Di_s, en quien confiaré.<br/><br/>Él te librará del lazo del cazador, de la peste destructora. Con sus plumas te cubrirá, y debajo de sus alas estarás seguro; escudo y adarga es su verdad.<br/><br/>No temerás el terror nocturno, ni saeta que vuele de día, ni pestilencia que ande en oscuridad, ni mortandad que en medio del día destruya. Caerán a tu lado mil, y diez mil a tu diestra; mas a ti no llegará. Ciertamente con tus ojos mirarás y verás la recompensa de los impíos.<br/><br/>Porque has puesto a <em>Adonai</em>, que es mi esperanza, al Altísimo por tu habitación, no te sobrevendrá mal, ni plaga tocará tu morada. Pues a sus ángeles mandará acerca de ti, que te guarden en todos tus caminos. En las manos te llevarán, para que tu pie no tropiece en piedra. Sobre el león y el áspid pisarás; hollarás al cachorro del león y al dragón.<br/><br/>Por cuanto en mí ha puesto su amor, yo también lo libraré; le pondré en alto, por cuanto ha conocido mi nombre. Me invocará, y yo le responderé; con él estaré yo en la angustia; lo libraré y le glorificaré. Lo saciaré de larga vida, y le mostraré mi salvación.</div>
+      <div class="ref">Tehilim 91</div>
+      <div style="margin:14px 0 10px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#554;margin-bottom:6px"><span id="cur6">0:00</span><span id="tot6">0:00</span></div><div id="bar6" onclick="saltar(6,event)" style="width:100%;height:8px;border-radius:999px;background:rgba(255,255,255,0.08);cursor:pointer;overflow:hidden;margin-bottom:10px"><div id="fill6" style="width:0%;height:100%;border-radius:999px;background:linear-gradient(to right,#7b3fa0,#c9a84c);transition:width 0.3s"></div></div><div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-bottom:8px"><button onclick="retroceder(6)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">⏪ 5s</button><button id="btnPlay6" onclick="togglePlay(6)" style="padding:12px 28px;border-radius:999px;font-family:Georgia,serif;font-size:20px;cursor:pointer;border:1px solid #c9a84c;background:rgba(255,255,255,0.06);color:#e8c97a">▶</button><button onclick="adelantar(6)" style="padding:10px 20px;border-radius:999px;font-family:Georgia,serif;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#776">5s ⏩</button></div><div id="st6" style="text-align:center;font-size:11px;color:#443;margin-bottom:8px;font-style:italic">Listo para reproducir</div></div><div style="display:flex;justify-content:flex-end"><button class="btn-complete" id="btn6" onclick="complete(6)">✓ Completada</button></div>
+    </div>
+  </div>
+
+  <div class="ds" id="doneScreen">
+    <div style="font-size:48px;margin-bottom:16px">🌙</div>
+    <div style="font-size:20px;color:#c9a84c;margin-bottom:8px">Buenas noches</div>
+    <div style="font-size:14px;color:#c8b88a;font-style:italic;margin-bottom:12px">"En paz me acostaré, y asimismo dormiré"</div>
+    <div style="font-size:13px;color:#554;line-height:1.6">Completaste todas las oraciones.<br/>Que <span style="color:#c9a84c">Adonai</span> guarde tu sueño.</div>
+    <button class="breset" onclick="resetAll()">↺ Reiniciar para mañana</button>
+  </div>
+  <div class="foot">Bet El Shadai · תְּפִלַּת הַלַּיְלָה</div>
+</div>
+<script>
+
+var velocidad=1.2,activeN=null,reproduciendo=false,pausado=false,tiempoAcumulado=0,tiempoInicio=0,duracionTotal=0,timerProgreso=null;
+function calcularDuracion(n,vel){if(!TEXTS[n])return 60;return Math.round((TEXTS[n].split(/\s+/).length/(130*(vel||velocidad)))*60);}
+function formatTime(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+function initTotal(n){duracionTotal=calcularDuracion(n,velocidad);var el=document.getElementById('tot'+n);if(el)el.textContent=formatTime(duracionTotal);}
+function stopCurrent(){window.speechSynthesis.cancel();clearInterval(timerProgreso);if(activeN!==null){var pn=activeN;var b=document.getElementById('btnPlay'+pn),s=document.getElementById('st'+pn);if(b)b.textContent='▶';if(s)s.textContent='Listo para reproducir';}reproduciendo=false;pausado=false;activeN=null;tiempoAcumulado=0;}
+function hablar(n,desde){if(activeN!==null&&activeN!==n)stopCurrent();window.speechSynthesis.cancel();clearInterval(timerProgreso);if(!TEXTS[n])return;var palabras=TEXTS[n].split(/\s+/);duracionTotal=calcularDuracion(n,velocidad);var pct=(desde!==undefined)?Math.max(0,Math.min(desde,1)):(tiempoAcumulado/Math.max(duracionTotal,1));var wi=Math.floor(pct*palabras.length);var tp=palabras.slice(wi).join(' ');if(!tp.trim())return;var u=new SpeechSynthesisUtterance(tp);u.lang='es-ES';u.rate=velocidad;var v=window.speechSynthesis.getVoices().find(function(x){return x.lang.startsWith('es');});if(v)u.voice=v;tiempoAcumulado=pct*duracionTotal;tiempoInicio=Date.now()-(tiempoAcumulado*1000);activeN=n;u.onstart=function(){reproduciendo=true;pausado=false;var b=document.getElementById('btnPlay'+n),s=document.getElementById('st'+n);if(b)b.textContent='⏸';if(s)s.textContent='Reproduciendo...';iniciarTimer(n);};u.onend=function(){if(!pausado){reproduciendo=false;activeN=null;var b=document.getElementById('btnPlay'+n),s=document.getElementById('st'+n),r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);if(b)b.textContent='▶';if(s)s.textContent='Completada ✓';if(r)r.style.width='100%';if(c)c.textContent=formatTime(duracionTotal);clearInterval(timerProgreso);tiempoAcumulado=0;}};u.onerror=function(){reproduciendo=false;var b=document.getElementById('btnPlay'+n);if(b)b.textContent='▶';clearInterval(timerProgreso);};window.speechSynthesis.speak(u);}
+function iniciarTimer(n){clearInterval(timerProgreso);timerProgreso=setInterval(function(){var el=(Date.now()-tiempoInicio)/1000;var pct=Math.min(el/duracionTotal,1);var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);if(r)r.style.width=(pct*100)+'%';if(c)c.textContent=formatTime(Math.min(el,duracionTotal));tiempoAcumulado=el;if(pct>=1)clearInterval(timerProgreso);},200);}
+function togglePlay(n){if(activeN!==null&&activeN!==n)stopCurrent();if(!reproduciendo&&!pausado){hablar(n,tiempoAcumulado/Math.max(duracionTotal,1));}else if(reproduciendo&&activeN===n){pausado=true;reproduciendo=false;tiempoAcumulado=(Date.now()-tiempoInicio)/1000;window.speechSynthesis.cancel();clearInterval(timerProgreso);var b=document.getElementById('btnPlay'+n),s=document.getElementById('st'+n);if(b)b.textContent='▶';if(s)s.textContent='Pausado';}else if(pausado&&activeN===n){pausado=false;hablar(n,tiempoAcumulado/Math.max(duracionTotal,1));}}
+function adelantar(n){if(activeN!==null&&activeN!==n)stopCurrent();if(activeN!==n){duracionTotal=calcularDuracion(n,velocidad);tiempoAcumulado=0;}var p=Math.min((tiempoAcumulado+5)/duracionTotal,1);tiempoAcumulado=p*duracionTotal;if(reproduciendo||pausado){pausado=false;hablar(n,p);}else{var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);if(r)r.style.width=(p*100)+'%';if(c)c.textContent=formatTime(tiempoAcumulado);}}
+function retroceder(n){if(activeN!==null&&activeN!==n)stopCurrent();if(activeN!==n){duracionTotal=calcularDuracion(n,velocidad);tiempoAcumulado=0;}var p=Math.max((tiempoAcumulado-5)/duracionTotal,0);tiempoAcumulado=p*duracionTotal;if(reproduciendo||pausado){pausado=false;hablar(n,p);}else{var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);if(r)r.style.width=(p*100)+'%';if(c)c.textContent=formatTime(tiempoAcumulado);}}
+function saltar(n,e){if(activeN!==null&&activeN!==n)stopCurrent();if(activeN!==n){duracionTotal=calcularDuracion(n,velocidad);tiempoAcumulado=0;}var barra=document.getElementById('bar'+n);if(!barra)return;var rect=barra.getBoundingClientRect();var p=Math.max(0,Math.min((e.clientX-rect.left)/rect.width,1));tiempoAcumulado=p*duracionTotal;var r=document.getElementById('fill'+n),c=document.getElementById('cur'+n);if(r)r.style.width=(p*100)+'%';if(c)c.textContent=formatTime(tiempoAcumulado);if(reproduciendo||pausado){pausado=false;hablar(n,p);}}
+function cambiarVel(v){velocidad=parseFloat(v);document.getElementById('velLabel').textContent=parseFloat(v).toFixed(1)+'×';if(reproduciendo&&activeN!==null)hablar(activeN,tiempoAcumulado/Math.max(duracionTotal,1));}
+window.speechSynthesis.onvoiceschanged=function(){for(var i=1;i<=TOTAL;i++)initTotal(i);};
+
+function buildDots(){var c=document.getElementById('progressDots');c.innerHTML='';for(var i=1;i<=TOTAL;i++){var d=document.createElement('div');d.className='prog-dot'+(done[i]?' done':(openCards[i]?' active':''));(function(n){d.onclick=function(){toggle(n)}})(i);c.appendChild(d);}var count=Object.keys(done).length;document.getElementById('progLabel').textContent=count===0?'Toca cada oración al completarla':count===TOTAL?'¡Todas completadas! 🌙':count+' de '+TOTAL+' completadas';}
+function toggle(n){openCards[n]=!openCards[n];document.getElementById('body'+n).classList.toggle('open',!!openCards[n]);document.getElementById('arrow'+n).classList.toggle('open',!!openCards[n]);if(openCards[n])initTotal(n);buildDots();}
+function complete(n){if(activeN===n)stopCurrent();done[n]=true;var btn=document.getElementById('btn'+n);btn.textContent='✓ Completada';btn.classList.add('done');openCards[n]=false;document.getElementById('body'+n).classList.remove('open');document.getElementById('arrow'+n).classList.remove('open');if(n<TOTAL){openCards[n+1]=true;initTotal(n+1);document.getElementById('body'+(n+1)).classList.add('open');document.getElementById('arrow'+(n+1)).classList.add('open');setTimeout(function(){document.getElementById('body'+(n+1)).scrollIntoView({behavior:'smooth',block:'start'});},150);}buildDots();if(Object.keys(done).length===TOTAL){setTimeout(function(){var ds=document.getElementById('doneScreen');ds.classList.add('show');ds.scrollIntoView({behavior:'smooth'});},400);}}
+function resetAll(){stopCurrent();openCards={};done={};for(var i=1;i<=TOTAL;i++){var btn=document.getElementById('btn'+i);btn.textContent='✓ Completada';btn.classList.remove('done');document.getElementById('body'+i).classList.remove('open');document.getElementById('arrow'+i).classList.remove('open');var r2=document.getElementById('fill'+i),c2=document.getElementById('cur'+i),t2=document.getElementById('tot'+i),b2=document.getElementById('btnPlay'+i),s2=document.getElementById('st'+i);if(r2)r2.style.width='0%';if(c2)c2.textContent='0:00';if(t2)t2.textContent='0:00';if(b2)b2.textContent='▶';if(s2)s2.textContent='Listo para reproducir';}document.getElementById('doneScreen').classList.remove('show');buildDots();window.scrollTo({top:0,behavior:'smooth'});}
+buildDots();toggle(1);initTotal(1);
+</script>
+</body>
+</html>
